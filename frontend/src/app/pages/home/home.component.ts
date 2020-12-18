@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-home',

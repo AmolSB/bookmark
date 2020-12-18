@@ -1,9 +1,21 @@
 <div class="container">
+
   <div class="right">
-    <img src="assets/images/landing-page.jpg" alt="">
+    <!-- <img src="assets/images/landing-page.jpg" alt=""> -->
+    <div class="content">
+      <div class="brand-title">DeltaProp</div>
+      <div class="links">
+        <div class="links__link" [routerLink]="'/list'">Public Collections</div>
+        <div class="links__link">What is it?</div>
+        <div class="links__link">How it works</div>
+        <div class="links__link">About</div>
+      </div>
+    </div>
+
   </div>
+
   <div class="left">
-    <div class="action-container" *ngIf="signUp">
+    <!-- <div class="action-container" *ngIf="signUp">
       <div class="action-container__heading">
         Create a new account
       </div>
@@ -93,7 +105,11 @@
         <span style="color:#673ab7; cursor: pointer; text-decoration: underline" (click)="signUp=true; login=false">Sign Up</span>
         to create a new account.
       </div>
-    </div>
+    </div> -->
+
+    <app-authentication-button></app-authentication-button>
+
+    <!-- <app-authentication-button></app-authentication-button> -->
 
   </div>
 </div>

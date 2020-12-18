@@ -1,0 +1,74 @@
+.container {
+
+  & .right {
+    flex-basis: 25%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+
+    & .brand-title {
+      font-size: 32px;
+      color: white;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 4rem;
+      cursor: pointer;
+    }
+
+    & .links {
+      &__link {
+        margin-bottom: 3rem;
+        color: white;
+        font-size: 18px;
+        cursor: pointer;
+        font-weight: lighter;
+        letter-spacing: 2px;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  & .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+    background: white;
+    border-radius: 30px;
+    padding: 1.5rem 2rem;
+    position: relative;
+  }
+
+  & .action-container {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    height: 510px;
+    justify-content: flex-start;
+    margin-top: -60px;
+
+    &__heading {
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: .5px;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    &__body {
+      & form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      & .form-field {
+        margin-bottom: .5rem;
+      }
+    }
+
+  }
+}

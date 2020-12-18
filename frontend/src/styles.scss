@@ -3,3 +3,37 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body * {
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 0 1.5rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-size: 3rem;
+  position: fixed;
+  font-family: 'Open Sans';
+  cursor: pointer;
+  color: #ccc;
+  width: 100%;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+.page-container {
+  // padding-top: 3.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #060517;
+  padding: 1rem;
+}
