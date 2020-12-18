@@ -1,0 +1,115 @@
+<div class="container">
+
+  <div class="right">
+    <!-- <img src="assets/images/landing-page.jpg" alt=""> -->
+    <div class="content">
+      <div class="brand-title">DeltaProp</div>
+      <div class="links">
+        <div class="links__link" [routerLink]="'/list'">Public Collections</div>
+        <div class="links__link">What is it?</div>
+        <div class="links__link">How it works</div>
+        <div class="links__link">About</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="left">
+    <!-- <div class="action-container" *ngIf="signUp">
+      <div class="action-container__heading">
+        Create a new account
+      </div>
+      <div class="action-container__body">
+        <form class="signup-form">
+          <mat-form-field class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe">
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="johndoe@mail.com">
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="xxx-xx-xxx">
+          </mat-form-field>
+
+          <button style="margin-top: 1.5rem; padding: .35rem" mat-raised-button color="primary">Sign Up</button>
+
+          <mat-divider style="margin-top: 2.5rem;"></mat-divider>
+          <span
+            style="display: inline-block; background-color: #f4f4f4; width: 26px; height: 24px; position: relative; top: -10px; left: 46.5%; color: grey; text-align: center;">or</span>
+
+          <button mat-raised-button style="margin-top: 1rem; padding: .35rem;">
+            <span style="display: flex; align-items: center; justify-content: center">
+              <img src="assets/logos/google-logo.svg" alt="" style="height: 26px; margin-right: .5rem;">
+              <span>Sign up via Google</span>
+            </span>
+          </button>
+          <button mat-raised-button style="margin-top: 1rem; padding: .35rem;">
+            <span style="display: flex; align-items: center; justify-content: center">
+              <img src="assets/logos/github-logo.svg" alt="" style="height: 26px; margin-right: .5rem">
+              <span>Sign up via Github</span>
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="action-container" *ngIf="login">
+      <div class="action-container__heading">
+        Login
+      </div>
+      <div class="action-container__body">
+        <form class="signup-form">
+          <mat-form-field class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="johndoe@mail.com">
+          </mat-form-field>
+
+          <mat-form-field class="form-field">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="xxx-xx-xxx">
+          </mat-form-field>
+
+          <button style="margin-top: 1.5rem; padding: .35rem" mat-raised-button color="primary">Login</button>
+
+          <mat-divider style="margin-top: 2.5rem;"></mat-divider>
+          <span
+            style="display: inline-block; background-color: #f4f4f4; width: 26px; height: 24px; position: relative; top: -10px; left: 46.5%; color: grey; text-align: center;">or</span>
+
+          <button mat-raised-button style="margin-top: 1rem; padding: .35rem;">
+            <span style="display: flex; align-items: center; justify-content: center">
+              <img src="assets/logos/google-logo.svg" alt="" style="height: 26px; margin-right: .5rem;">
+              <span>Login via Google</span>
+            </span>
+          </button>
+          <button mat-raised-button style="margin-top: 1rem; padding: .35rem;">
+            <span style="display: flex; align-items: center; justify-content: center">
+              <img src="assets/logos/github-logo.svg" alt="" style="height: 26px; margin-right: .5rem">
+              <span>Login via Github</span>
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div style="font-size: 14px; position: fixed; bottom: 50px">
+      <div *ngIf="signUp">
+        Already have an account?
+        <span style="color:#673ab7; cursor: pointer; text-decoration: underline" (click)="signUp=false; login=true;">Log in</span>
+      </div>
+      <div *ngIf="login">
+        New here?
+        <span style="color:#673ab7; cursor: pointer; text-decoration: underline" (click)="signUp=true; login=false">Sign Up</span>
+        to create a new account.
+      </div>
+    </div> -->
+
+    <app-authentication-button></app-authentication-button>
+
+    <!-- <app-authentication-button></app-authentication-button> -->
+
+  </div>
+</div>
