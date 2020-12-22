@@ -37,3 +37,20 @@ body * {
   background-color: #060517;
   padding: 1rem;
 }
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2d4d;
+  // background:  nb-theme(background-basic-color-4);
+  cursor: pointer;
+  border-radius: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #575e8c;
+  border-radius: .4rem;
+  // background: nb-theme(background-basic-color-2);
+}

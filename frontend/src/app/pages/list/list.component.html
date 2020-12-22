@@ -10,6 +10,14 @@
             <mat-icon aria-hidden="false" aria-label="All Bookmarks">bookmarks</mat-icon>
             <span>All Bookmarks</span>
           </div>
+          <div class="menu-item" *ngIf="!isPublicCollection">
+            <mat-icon aria-hidden="false" aria-label="All Bookmarks">public</mat-icon>
+            <span>Public Collections</span>
+          </div>
+          <div class="menu-item" *ngIf="isPublicCollection">
+            <mat-icon aria-hidden="false" aria-label="All Bookmarks">folder_shared</mat-icon>
+            <span>My Collections</span>
+          </div>
           <!-- <div class="menu-item">
             <mat-icon aria-hidden="false" aria-label="All Bookmark">bookmark</mat-icon>
             <span>All Bookmark</span>
@@ -19,10 +27,12 @@
         <div class="collections__list">
           <div class="heading">My Collections</div>
           <div class="body">
+            <div *ngIf="collections.length">
             <div (click)="collectionClicked(collection)" *ngFor="let collection of collections" class="collection" [ngClass]="{'active': currentCollection.id === collection.id}">
               <span class="collection__name">{{collection?.name}}</span>
               <span class="collection__links-count">15</span>
             </div>
+          </div>
           </div>
           <div class="divider"></div>
           <div (click)="showAddCollectionInput()" class="collection-new" *ngIf="!showAddNewCollectionInput">

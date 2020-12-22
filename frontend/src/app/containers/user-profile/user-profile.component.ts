@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -12,9 +12,9 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.auth.user$.subscribe(user => {
-      console.log(user)
-    })
+    // this.auth.user$.subscribe(user => {
+    //   console.log(user)
+    // })
   }
 
 }

@@ -22,6 +22,11 @@ class User(db.Model):
     username = Column(String(50))
     email = Column(String(50), unique=True)
 
+    def insert(self):
+      db.session.add(self)
+      db.session.commit()
+
+
     def __repr__(self):
       return f'<User: {self.username}, email: {self.email}>'
 
@@ -45,7 +50,7 @@ class Link(db.Model):
       "url": self.url,
       "description": self.description,
       "collection": self.collection
-      
+
     }
 
   def __repr__(self):
@@ -54,9 +59,9 @@ class Link(db.Model):
 
 class Collection(db.Model):
     id = Column(String(), primary_key=True)
-    name = Column(String(), unique=True)
-    # owner = Column(String(), ForeignKey('user.id'))
-    owner = Column(String())
+    name = Column(String())
+    owner = Column(String(), ForeignKey('user.id'))
+    # owner = Column(String())
     is_public = Column(Boolean())
     description = Column(String(300))
 
@@ -71,4 +76,4 @@ class Collection(db.Model):
       }
 
     def __repr__(self):
-      return f'<Collection: {self.name}, Owner: {self.owner}>'
+      return f'<Collection: {self.name}, Owner: {self.owner}, ID: {self.id}>'

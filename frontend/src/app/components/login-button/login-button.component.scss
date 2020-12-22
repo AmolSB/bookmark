@@ -1,0 +1,28 @@
+button {
+  width: 250px;
+  background-color: #2a2d4d !important;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  width: 100%;
+  display: inline-block;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: inherit;
+    color: white;
+  }
+}

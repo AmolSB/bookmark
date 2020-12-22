@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +14,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.auth.getAccessTokenSilently().subscribe(res => {
-      console.log(res)
-    })
+    this.auth.load_jwt_access_token()
+    // if(!this.auth.load_jwt_access_token()) {
+      this.auth.check_token_fragment();
+    // }
   }
 
   navigateToHome() {

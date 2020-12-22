@@ -22,6 +22,7 @@ export class ListComponent implements OnInit {
   queryParams: any;
   isActive = false;
   showAddNewCollectionInput = false;
+  isPublicCollection = false;
 
   constructor(private _listService: ListService, private _route: ActivatedRoute, private _router: Router) { }
 
@@ -105,6 +106,9 @@ export class ListComponent implements OnInit {
     this._listService.addNewCollection(payload).pipe(
       map((res: any) => res.data)
     ).subscribe(collection => {
+      if(!this.collections.length) {
+        this.currentCollection = collection;
+      }
       this.collections.push(collection)
     })
   }

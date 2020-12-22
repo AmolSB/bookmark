@@ -31,7 +31,6 @@ def get_token_auth_header():
     """Obtains the Access Token from the Authorization Header
     """
     auth = request.headers.get('Authorization', None)
-    print('get_toekn_auth_header', auth)
     if not auth:
         raise AuthError({
             'code': 'authorization_header_missing',
@@ -92,7 +91,6 @@ def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
-    print(unverified_header)
     rsa_key = {}
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -118,7 +116,6 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
-            print(payload)
             return payload
 
         except jwt.ExpiredSignatureError:
@@ -159,3 +156,18 @@ def requires_auth(permission=''):
             return f(payload, *args, **kwargs)
         return wrapper
     return requires_auth_decorator
+
+
+
+def get_user_id():
+  def get_user_id_decorator(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+      token = get_token_auth_header()
+      try:
+        user_id = jwt.get_unverified_claims(token)["sub"]
+      except:
+        abort(401)
+      return f(user_id)
+    return wrapper
+  return get_user_id_decorator

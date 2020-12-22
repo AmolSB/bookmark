@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-logout-button',
@@ -15,10 +15,11 @@ export class LogoutButtonComponent implements OnInit {
   }
 
   logout(): void {
-    console.log(this.doc.location);
+    this.auth.logout();
+    // console.log(this.doc.location);
 
-    console.log(this.doc.location.origin)
-    this.auth.logout({ returnTo:  'http://localhost:4200'});
+    // console.log(this.doc.location.origin)
+    // this.auth.logout({ returnTo:  'http://localhost:4200'});
   }
 
 }

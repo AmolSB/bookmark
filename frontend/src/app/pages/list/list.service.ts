@@ -1,6 +1,7 @@
 import { query } from "@angular/animations";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaderResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AuthService } from "src/app/shared/services/auth.service";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -10,13 +11,14 @@ export class ListService {
 
   apiBase = environment.apiBase;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient, public auth: AuthService) {
 
   }
 
   getCollections() {
     const url = `${this.apiBase}collections`;
-    return this._http.get(url)
+    const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
+    return this._http.get(url, {headers: header})
   }
 
   getLinks(queryParams?) {
@@ -30,11 +32,13 @@ export class ListService {
 
   saveNewLink(payload, queryParams) {
     const url = `${this.apiBase}links?${queryParams}`
-    return this._http.post(url, payload)
+    const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
+    return this._http.post(url, payload, {headers: header})
   }
 
   addNewCollection(payload) {
-    const url = `${this.apiBase}collections`
-    return this._http.post(url, payload)
+    const url = `${this.apiBase}collections`;
+    const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
+    return this._http.post(url, payload, {headers: header})
   }
 }
