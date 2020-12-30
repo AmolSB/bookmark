@@ -6,15 +6,15 @@
     <div class="container">
       <div class="collections">
         <div class="collections__menu">
-          <div class="menu-item">
+          <!-- <div class="menu-item">
             <mat-icon aria-hidden="false" aria-label="All Bookmarks">bookmarks</mat-icon>
             <span>All Bookmarks</span>
-          </div>
-          <div class="menu-item" *ngIf="!isPublicCollection">
+          </div> -->
+          <div (click)="fetchPublicCollections()" class="menu-item" *ngIf="authService.isLoggedIn && !showPublicCollections">
             <mat-icon aria-hidden="false" aria-label="All Bookmarks">public</mat-icon>
             <span>Public Collections</span>
           </div>
-          <div class="menu-item" *ngIf="isPublicCollection">
+          <div class="menu-item" *ngIf="authService.isLoggedIn && showPublicCollections" (click)="fetchMyCollections()">
             <mat-icon aria-hidden="false" aria-label="All Bookmarks">folder_shared</mat-icon>
             <span>My Collections</span>
           </div>
@@ -25,26 +25,30 @@
         </div>
 
         <div class="collections__list">
-          <div class="heading">My Collections</div>
+          <div class="heading">{{showPublicCollections ? 'Public Collections' : 'My Collections'}}</div>
           <div class="body">
-            <div *ngIf="collections.length">
+            <div *ngIf="collections && collections.length">
             <div (click)="collectionClicked(collection)" *ngFor="let collection of collections" class="collection" [ngClass]="{'active': currentCollection.id === collection.id}">
               <span class="collection__name">{{collection?.name}}</span>
-              <span class="collection__links-count">15</span>
+              <!-- <span class="collection__links-count">{{collection?.count}}</span> -->
             </div>
           </div>
           </div>
           <div class="divider"></div>
-          <div (click)="showAddCollectionInput()" class="collection-new" *ngIf="!showAddNewCollectionInput">
-            <mat-icon>add_box</mat-icon>
-            <span>New Collection...</span>
-          </div>
 
-          <div *ngIf="showAddNewCollectionInput" class="collection-new">
-            <input [autofocus]="true" placeholder="Collection Name..." #newCollectionInput (keyup.enter)="addNewCollection(newCollectionInput.value)">
-            {{newCollectionInput.focus()}}
-            <mat-icon (click)="addNewCollection(newCollectionInput.value)">done</mat-icon>
-            <mat-icon (click)="showAddNewCollectionInput = false">close</mat-icon>
+          <div *ngIf="!showPublicCollections || authService.can('create:public-collections')">
+            <div (click)="showAddCollectionInput()" class="collection-new" *ngIf="!showAddNewCollectionInput">
+              <mat-icon>add_box</mat-icon>
+              <span>New Collection...</span>
+            </div>
+  
+            <div *ngIf="showAddNewCollectionInput" class="collection-new">
+              <input [autofocus]="true" placeholder="Collection Name..." #newCollectionInput (keyup.enter)="addNewCollection(newCollectionInput.value)">
+              {{newCollectionInput.focus()}}
+              <mat-icon (click)="addNewCollection(newCollectionInput.value)">done</mat-icon>
+              <mat-icon (click)="showAddNewCollectionInput = false">close</mat-icon>
+            </div>
+  
           </div>
         </div>
 
@@ -70,31 +74,42 @@
             <mat-icon>notifications</mat-icon>
           </div> -->
 
-          <div class="links__header-user">
-            <img src="assets/images/profile_pic.jpg" style="height: 45px; width: 45px; border-radius: 50%;">
+          <div class="links__header-user" *ngIf="userInfo">
+            <img [src]="userInfo?.picture" style="height: 45px; width: 45px; border-radius: 50%;" [title]="userInfo?.name">
           </div>
         </div>
 
         <div class="links__list">
-          <div (click)="openLink(link)" class=link *ngFor="let link of links">
-            <div class="link__logo">
-              <img [src]="link?.logo" alt="">
+          <div class=link *ngFor="let link of links">
+            
+            <div (click)="openLink(link)" style="margin-right: auto; flex: 1; display: flex;">
+              <div class="link__logo">
+                <img [src]="link?.logo" alt="">
+              </div>
+              <div class="link__details">
+                <div class="name">{{link?.name[0].toUpperCase() + link?.name.slice(1)}}</div>
+                <div class="description">{{link?.description}}</div>
+              </div>
             </div>
-            <div class="link__details">
-              <div class="name">{{link?.name[0].toUpperCase() + link?.name.slice(1)}}</div>
-              <div class="description">{{link?.description}}</div>
+            
+
+            <div (click)="editLink(link); drawer.toggle()" class="link__delete">
+              <mat-icon>edit</mat-icon>
             </div>
-            <div class="link__delete">
+
+            <div (click)="deleteLink(link)" class="link__delete">
               <mat-icon>delete</mat-icon>
             </div>
             <div class="link__menu"></div>
           </div>
         </div>
 
-        <div class="links__add">
-          <mat-card (click)="drawer.toggle()">
-            <mat-icon>add</mat-icon>
-          </mat-card>
+        <div *ngIf="!showPublicCollections || authService.can('create:public-collections')">
+          <div class="links__add">
+            <mat-card (click)="drawer.toggle()">
+              <mat-icon>add</mat-icon>
+            </mat-card>
+          </div>
         </div>
       </div>
     </div>
@@ -122,7 +137,7 @@
 <ng-template #addLinkDrawer>
   <div class="drawer">
     <div class="drawer__header">
-      <span class="mat-title">Add Link</span>
+      <span class="mat-title">{{editingLink ? 'Edit Link' : 'Add Link'}}</span>
       <mat-icon [inline]="true" (click)="drawer.toggle()">close</mat-icon>
     </div>
 
@@ -131,17 +146,19 @@
     <div class="drawer__body">
       <mat-form-field class="form-field">
         <mat-label>Website</mat-label>
-        <input matInput placeholder="e.g. https://www.googlg.com" #linkURL>
+        <input [formControl]="linkURL" matInput placeholder="e.g. https://www.googlg.com">
       </mat-form-field>
 
       <mat-form-field class="form-field">
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Description" #linkDescription style="height: 100px;"></textarea>
+        <textarea [formControl]="linkDesc" matInput placeholder="Description" style="height: 100px;"></textarea>
       </mat-form-field>
     </div>
   </div>
 
   <div class="drawer__footer">
-    <button mat-raised-button color="primary" (click)="saveNewLink(linkURL.value, linkDescription.value)">Save Link</button>
+    <button *ngIf="!editingLink" mat-raised-button color="primary" (click)="saveNewLink()">Save Link</button>
+    <button *ngIf="editingLink" mat-raised-button color="primary" (click)="updateLink()">Update Link</button>
+
   </div>
 </ng-template>

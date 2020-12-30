@@ -8,8 +8,8 @@ from jose import jwt
 
 AUTH0_DOMAIN = 'project-bookmark.us.auth0.com'
 ALGORITHMS = ['RS256']
+# API_AUDIENCE = 'https://deltaprop.herokuapp.com/'
 API_AUDIENCE = 'http://localhost:5000'
-
 
 # AuthError Exception
 '''

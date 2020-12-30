@@ -9,6 +9,10 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select'
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
 
 const routes: Routes = [
   {
@@ -28,6 +32,8 @@ const routes: Routes = [
     MatSelectModule,
     MatDividerModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
     RouterModule.forChild(routes),
   ],
   exports:[RouterModule]

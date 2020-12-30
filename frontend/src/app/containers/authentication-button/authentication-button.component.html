@@ -1,12 +1,12 @@
-<app-login-button>
+<app-login-button *ngIf="auth.isLoggedOut">
 </app-login-button>
 
 <div style="margin-bottom: 1rem;"></div>
 
-<app-signup-button>
-</app-signup-button>
+<!-- <app-signup-button>
+</app-signup-button> -->
 
 <div style="margin-bottom: 1rem;"></div>
 
-<app-logout-button>
+<app-logout-button *ngIf="auth.isLoggedIn">
 </app-logout-button>

@@ -15,8 +15,14 @@ export class ListService {
 
   }
 
-  getCollections() {
-    const url = `${this.apiBase}collections`;
+  getCollections(fetchPublicCollections) {
+    let url = '';
+    if(!fetchPublicCollections) {
+      url = `${this.apiBase}collections`;
+    } else {
+      url = `${this.apiBase}public-collections`;
+    }
+
     const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
     return this._http.get(url, {headers: header})
   }
@@ -36,9 +42,24 @@ export class ListService {
     return this._http.post(url, payload, {headers: header})
   }
 
-  addNewCollection(payload) {
-    const url = `${this.apiBase}collections`;
+  addNewCollection(payload, isPublicCollection) {
+    let url = '';
+    if(isPublicCollection) {
+      url = `${this.apiBase}collections`;
+    } else {
+      url = `${this.apiBase}public-collections`;
+    }
     const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
     return this._http.post(url, payload, {headers: header})
+  }
+
+  deleteLink(linkID) {
+    const url = `${this.apiBase}links?link_id=${linkID}`;
+    return this._http.delete(url);
+  }
+
+  updateLink(payload) {
+    const url = `${this.apiBase}links`;
+    return this._http.patch(url, payload);
   }
 }

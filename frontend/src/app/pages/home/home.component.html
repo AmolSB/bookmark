@@ -5,10 +5,11 @@
     <div class="content">
       <div class="brand-title">DeltaProp</div>
       <div class="links">
-        <div class="links__link" [routerLink]="'/list'">Public Collections</div>
-        <div class="links__link">What is it?</div>
-        <div class="links__link">How it works</div>
-        <div class="links__link">About</div>
+        <div class="links__link" (click)="showPublicCollections()">Public Collections</div>
+        <div class="links__link" *ngIf="authService.isLoggedIn" (click)="showMyCollections()">My Collections</div>
+        <div class="links__link" (click)="openWhatIsItDialog()">What is it?</div>
+        <!-- <div class="links__link">How it works</div> -->
+        <!-- <div class="links__link">About</div> -->
       </div>
     </div>
 
@@ -113,3 +114,24 @@
 
   </div>
 </div>
+
+
+<ng-template #whatIsIt>
+  <h1 mat-dialog-title>DeltaProp</h1>
+<mat-dialog-content class="mat-typography">
+  <h2>Browse internet in an organized way</h2>
+  <p>DeltaProp lets you save your bookmakrs across all devices. Just create a new account, create a collection to categorize your link and save your links</p>
+  <h2>What's new in that?</h2>
+  <p>DeltaProp also lets you see public collections (group of links), created by people like you, for you.</p>
+  <h2>The idea behind it</h2>
+  <p>Suppose you are a Beatles fan, browsing through internet, checking all the links available to get some info. There are chances that there is a page which contains very good info about Beatles but is't on page 6 or 7 or 8 (or maybe it's not event ranked in top 10)</p>
+  <p>Now how would you feel if I tell you you can see all sites which contains good info about The Beatles in one place?</p>
+  <p>That's where DeltaProp comes into play. A user goes through all these trouble and create a collection to save all those links. If he choses to make it public, anyone can just go through that public collection to get the hidden gems on internet.</p>
+  <h3>NOTE: This is under development. In case of any query please contact amolborgaonkar333@gmail.com</h3>
+  <p>Design inspired by Ben Tortorelli's design on bookmarking app (Source: Dribbble)  </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button> -->
+</mat-dialog-actions>
+</ng-template>

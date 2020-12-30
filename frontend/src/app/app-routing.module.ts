@@ -6,15 +6,13 @@ import { HomeComponent } from "./pages/home/home.component";
 const routes: Routes = [
   {
     path: "list",
-    loadChildren: () =>
-      import("./pages/list/list.module").then((m) => m.ListModule),
+    component: ListComponent,
   },
   {
     path: "home",
-    loadChildren: () =>
-      import("./pages/home/home.module").then((m) => m.HomeModule),
+    component: HomeComponent,
   },
-  { path: "", redirectTo: "home", pathMatch: "prefix" },
+  { path: "", component: HomeComponent },
 ];
 
 @NgModule({

@@ -12,6 +12,8 @@ import { AuthenticationButtonComponent } from 'src/app/containers/authentication
 import { LoginButtonComponent } from 'src/app/components/login-button/login-button.component';
 import { LogoutButtonComponent } from 'src/app/components/logout-button/logout-button.component';
 import { SignupButtonComponent } from 'src/app/components/signup-button/signup-button.component';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 const routes: Routes = [
   {
@@ -29,6 +31,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatIconModule,
     MatDividerModule,
+    MatDialogModule,
     RouterModule.forChild(routes)
   ]
 })
