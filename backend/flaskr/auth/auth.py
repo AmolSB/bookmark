@@ -7,15 +7,15 @@ from jose import jwt
 import os
 
 
-AUTH0_DOMAIN = 'project-bookmark.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'https://deltaprop.herokuapp.com/'
+# AUTH0_DOMAIN = 'project-bookmark.us.auth0.com'
+# ALGORITHMS = ['RS256']
+# API_AUDIENCE = 'https://deltaprop.herokuapp.com/'
 
 # The below way was not working
 # so for now I've directly assigned the variable values
-# AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
-# ALGORITHMS = os.environ.get['ALGORITHMS']
-# API_AUDIENCE = os.environ.get('API_AUDIENCE')
+AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
+ALGORITHMS = os.environ.get('ALGORITHMS')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 # API_AUDIENCE = 'http://localhost:5000'
 
 # AuthError Exception

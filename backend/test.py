@@ -2,38 +2,12 @@ import os
 import unittest
 import json
 from flask import Flask
-
 from app import app
 from models import setup_db, Collection
 
-ADMIN_TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1f" +
-"QlNCbG1McVRVX2RDaEJKb21NViJ9"+
-".eyJpc3MiOiJodHRwczovL3Byb2plY3QtYm9va21hcmsudXMuYXV0aDAuY29tLyIsInN1YiI6ImF"+
-'1dGgwfDVmZWQ3NzNiMDgyODRiMDA2YmI1NzBjZSIsImF1ZCI6WyJodHRwczovL2RlbHRhcHJvcC5'+
-'oZXJva3VhcHAuY29tLyIsImh0dHBzOi8vcHJvamVjdC1ib29rbWFyay51cy5hdXRoMC5jb20vdXN'+
-'lcmluZm8iXSwiaWF0IjoxNjA5NDAwNTMzLCJleHAiOjE2MDk0MDc3MzMsImF6cCI6Im9YVkhHdmM'+
-'yblJWeG5ZdnVlZTBDV3ZuSFVkVHV2dm5NIiwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCI'+
-'sInBlcm1pc3Npb25zIjpbImNyZWF0ZTpwdWJsaWMtY29sbGVjdGlvbnMiLCJkZWxldGU6cHVibGl'+
-'jLWNvbGxlY3Rpb25zIiwicmVhZDpwdWJsaWMtY29sbGVjdGlvbnMiLCJ1cGRhdGU6cHVibGljLWN'+
-'vbGxlY3Rpb25zIl19.xOE4p75Pcbnzr-93ImT1FEcnxtVnwIxqJtD4-4SOCR5Nh9BNOKgDobx75K'+
-'OMm08H1S0Ct_2CdsmvyD0J27LTAbLwktCXnJx9RT-qr7poits6SKNJfLypKCtQAJY05_Dr2idaSg'+
-'ot0na55aAtqxy2flF3Eb2wngxxIO7U4MqijFaEdk1FLzqCrT_zGnz7E8VGLVwAueoZ6y1JfhRQ4a'+
-'by8SqTzAlNg4VbxogulI7RI1SsaouLWmU2Yp2P33aDMw7hApNLytnmSWVaxGiBFEktNUddKOe9B8'+
-'b3gksICEX2DdR3eA5zkLCZANYNakIRmV9kGWJQiYnpKk1TopWCxJo1Jw'
 
-USER_TOKEN = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1fQlNCbG1McVRVX2R'+
-'DaEJKb21NViJ9.eyJpc3MiOiJodHRwczovL3Byb2plY3QtYm9va21hcmsudXMuYXV0aDAuY29tLy'+
-'IsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTE3ODc0ODc2MDYzOTMwNjI4ODcyIiwiYXVkIjpbImh0dH'+
-'BzOi8vZGVsdGFwcm9wLmhlcm9rdWFwcC5jb20vIiwiaHR0cHM6Ly9wcm9qZWN0LWJvb2ttYXJrLn'+
-'VzLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2MDk0MDA2MjcsImV4cCI6MTYwOTQwNzgyNy'+
-'wiYXpwIjoib1hWSEd2YzJuUlZ4bll2dWVlMENXdm5IVWRUdXZ2bk0iLCJzY29wZSI6Im9wZW5pZC'+
-'Bwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOltdfQ.TZLJNsmj4Yhq6iyEfwTWCZry5TpRAjD'+
-'X_nLuobPwlB4o5e0yT2vvqFjyatn_vMLN0qK736BhVLx-PMcTnNWJBYtRQJOcaLUv0YtpuWKHMZl'+
-'Ju3q03tZeK_obnbD_SDkA7WK3-G4lohMQOwtfnq6ZVDgdI6saSGVtDMs_YgYCvzOP_Pdngq81TY1'+
-'Ba9kuuQBeR3G1MnIdkSHYxH1t3jCtiXfo1Kmb1Dd8aaLf6T6X0uSsCVx3VW4hYc3LLFXRzWdQW8h'+
-'MbVp7BxkOF40rdJEox4CIe4hRCbEnJJ9IhDZvTI8gMdbjJvVKAYgs0REQnqSqN6Umq94B5tilt1g'+
-'2B_HQzA'
-
+ADMIN_TOKEN = os.environ.get('ADMIN_TOKEN')
+USER_TOKEN = os.environ.get('USER_TOKEN')
 
 class AppNameTestCase(unittest.TestCase):
     """This class represents the ___ test case"""

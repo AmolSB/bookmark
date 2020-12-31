@@ -211,9 +211,7 @@ def create_user(user_info, user_id):
 
 def get_user_info_from_auth0_server(access_token):
 
-    userinfo_url =
-    'https://project-bookmark.us.auth0.com/userinfo?access_token='
-    + access_token
+    userinfo_url = 'https://project-bookmark.us.auth0.com/userinfo?access_token=' + access_token
 
     decoded_access_token = jwt.get_unverified_claims(access_token)
     user_id = decoded_access_token["sub"]
