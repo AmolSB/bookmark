@@ -24,6 +24,8 @@ class AppNameTestCase(unittest.TestCase):
         """Executed after reach test"""
         pass
 
+
+
     def test_should_return_public_collections(self):
 
         res = self.client().get('/public-collections')
@@ -31,6 +33,8 @@ class AppNameTestCase(unittest.TestCase):
         self.assertEqual(data["code"], 200)
         public_collections = Collection.query.filter(Collection.is_public == True).all()
         self.assertEqual(len(data["data"]), len(public_collections))
+
+
 
 
     # This test should return 401 because only admin can perform curd on a public collection.
@@ -43,7 +47,8 @@ class AppNameTestCase(unittest.TestCase):
         self.assertEqual(data["code"], 401)
 
 
-    This test should return 200 because ADMIN can create a public collection
+
+    # This test should return 200 because ADMIN can create a public collection
     def test_should_crate_a_public_collection(self):
         collection = {
             "name": 'Admin Test'
@@ -57,11 +62,15 @@ class AppNameTestCase(unittest.TestCase):
         self.assertEqual(data['code'], 200)
 
 
+
+
     # This test should return 401 because only logged in user can view private collections.
     def test_should_not_return_private_collection(self):
         res = self.client().get('/collections')
         data = res.get_json()
         self.assertEqual(data["code"], 401)
+
+
 
 
     # This test should return 401 because only logged in user can create a new private collection.
@@ -75,7 +84,9 @@ class AppNameTestCase(unittest.TestCase):
         self.assertEqual(data["code"], 401)
 
 
-    This test should return 200 because a logged in user can create a private collection
+
+
+    # This test should return 200 because a logged in user can create a private collection
     def test_should_crate_a_private_collection(self):
         collection = {
             "name": 'User Test'
