@@ -45,9 +45,9 @@ export class ListService {
   addNewCollection(payload, isPublicCollection) {
     let url = '';
     if(isPublicCollection) {
-      url = `${this.apiBase}collections`;
-    } else {
       url = `${this.apiBase}public-collections`;
+    } else {
+      url = `${this.apiBase}collections`;
     }
     const header = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('JWT_ACCESS_TOKEN')}`)
     return this._http.post(url, payload, {headers: header})

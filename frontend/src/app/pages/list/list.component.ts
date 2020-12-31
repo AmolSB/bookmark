@@ -60,7 +60,8 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   getCollections(fetchPublicCollections=false) {
-    // this.collections = [];
+    this.collections = [];
+    this.links = [];
     this._listService.getCollections(fetchPublicCollections).pipe(
       map((res: any) => res.data),
       map(collections => {
@@ -178,10 +179,14 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   fetchPublicCollections() {
-    this.getCollections(true);
+    this.showPublicCollections = true;
+    this.collections = [];
+    this.links = [];
+    this.getCollections(this.showPublicCollections);
   }
 
   fetchMyCollections() {
+    this.showPublicCollections = false;
     this.getCollections(false);
   }
 

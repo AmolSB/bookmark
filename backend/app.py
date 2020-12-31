@@ -38,13 +38,22 @@ def home():
 def get_collections(user_id):
     # print('jwt', jwt)
     print('extracted user id', user_id)
-    collections = Collection.query.filter(Collection.owner == user_id).all()
+    collections = Collection.query.filter(Collection.owner == user_id, Collection.is_public == False).all()
     collections = [collection.details() for collection in collections]
     return jsonify({
         "code": 200,
         "data": collections
     })
 
+
+@app.route('/public-collections')
+def get_public_collections():
+    collections = Collection.query.filter(Collection.is_public == True).all()
+    collections = [collection.details() for collection in collections]
+    return jsonify({
+        "code": 200,
+        "data": collections,
+    })
 
 @app.route('/links')
 def get_links_by_collection_id():
@@ -119,6 +128,8 @@ def save_link():
 @app.route('/collections', methods=["POST"])
 # @requires_auth("create:collection")
 def add_new_collection():
+    if not request.headers.get('Authorization'):
+        abort(401)
     access_token = request.headers.get('Authorization').split(' ').pop()
     print('Access Token', access_token)
     collection_name = request.get_json()["name"]
@@ -129,7 +140,7 @@ def add_new_collection():
     user_id = decoded_access_token["sub"]
     collection_id = uuid.uuid4().hex
     new_collection = Collection(
-        id=collection_id, name=collection_name, owner=user_id)
+        id=collection_id, name=collection_name, owner=user_id, is_public=False)
     print(new_collection)
     new_collection.insert()
     return jsonify({
@@ -141,20 +152,11 @@ def add_new_collection():
     })
 
 
-@app.route('/public-collections')
-def get_public_collections():
-    collections = Collection.query.all()
-    collections = [collection.details() for collection in collections]
-    return jsonify({
-        "code": 200,
-        "data": collections,
-    })
-
 
 @app.route('/public-collections', methods=["POST"])
 @requires_auth('create:public-collections')
 def add_new_public_collection(jwt):
-    print(jwt)
+    print('in function', jwt)
     collection_name = request.get_json()["name"]
     user_id = jwt["sub"]
     print(collection_name)
@@ -227,7 +229,7 @@ Error handling for unprocessable entity
 def unprocessable(error):
     return jsonify({
         "success": False,
-        "error": 422,
+        "code": 422,
         "message": "unprocessable"
     }), 422
 
@@ -240,7 +242,7 @@ Error handler for 404
 def not_found(error):
     return jsonify({
         "success": False,
-        "error": 404,
+        "code": 404,
         "message": error.description
     }), 404
 
@@ -252,7 +254,7 @@ Error handler for AuthError
 def authentication_error(error):
     return jsonify({
         'success': False,
-        'error': error.status_code,
+        'code': error.status_code,
         'message': error.error
     }), error.status_code
 
@@ -265,7 +267,7 @@ Error handler for Unauthorized User
 def unauthorized(error):
     return jsonify({
         'success': False,
-        'error': 401,
+        'code': 401,
         'message': error.description
     }), 401
 
@@ -278,7 +280,7 @@ Error handler for Bad Request
 def bad_request(error):
     return jsonify({
         "success": False,
-        "error": 400,
+        "code": 400,
         "message": error.description
     }), 400
 
@@ -290,6 +292,6 @@ Error handler for Method not allowed
 def method_not_allowed(error):
     return jsonify({
         "success": False,
-        "error": 405,
+        "code": 405,
         "message": error.description
     }), 405
