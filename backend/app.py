@@ -10,7 +10,6 @@ import requests
 from jose import jwt
 
 # client_id = 'gmdRc7yb4eUpme3tXN2R8r67LVjSVPUw'
-# client_secret = 'yABUNNOVhxEcaRkLoqMt7QPJPD4nFKNhubx-xDy0CbjwJHkqOM8V58cX5T06-0Sc'
 
 # id_token = ''
 # access_token = ''
@@ -38,7 +37,9 @@ def home():
 def get_collections(user_id):
     # print('jwt', jwt)
     print('extracted user id', user_id)
-    collections = Collection.query.filter(Collection.owner == user_id, Collection.is_public == False).all()
+    collections = Collection.query.filter(
+        Collection.owner == user_id,
+        Collection.is_public == False).all()
     collections = [collection.details() for collection in collections]
     return jsonify({
         "code": 200,
@@ -48,12 +49,13 @@ def get_collections(user_id):
 
 @app.route('/public-collections')
 def get_public_collections():
-    collections = Collection.query.filter(Collection.is_public == True).all()
+    collections = Collection.query.filter(Collection.is_public).all()
     collections = [collection.details() for collection in collections]
     return jsonify({
         "code": 200,
         "data": collections,
     })
+
 
 @app.route('/links')
 def get_links_by_collection_id():
@@ -111,13 +113,18 @@ def save_link():
     payload = request.get_json()
     link_name = extract_name_from_url(payload["url"])
     id = uuid.uuid4().hex
-    collection = Collection.query.filter(Collection.id == collection_id).one_or_none()
+    collection = Collection.query.filter(
+        Collection.id == collection_id).one_or_none()
 
     if not collection:
         abort(404)
 
     new_link = Link(
-        id=id, url=payload["url"], description=payload["description"], name=link_name, collection=collection_id)
+        id=id,
+        url=payload["url"],
+        description=payload["description"],
+        name=link_name,
+        collection=collection_id)
     new_link.insert()
     return jsonify({
         "code": 200,
@@ -156,7 +163,6 @@ def add_new_collection():
             "name": collection_name
         }
     })
-
 
 
 @app.route('/public-collections', methods=["POST"])
@@ -205,7 +211,9 @@ def create_user(user_info, user_id):
 
 def get_user_info_from_auth0_server(access_token):
 
-    userinfo_url = 'https://project-bookmark.us.auth0.com/userinfo?access_token=' + access_token
+    userinfo_url =
+    'https://project-bookmark.us.auth0.com/userinfo?access_token='
+    + access_token
 
     decoded_access_token = jwt.get_unverified_claims(access_token)
     user_id = decoded_access_token["sub"]
@@ -225,12 +233,12 @@ def extract_name_from_url(url):
     return split_url[1]
 
 
-
-
 # Error Handling
 '''
 Error handling for unprocessable entity
 '''
+
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
@@ -240,10 +248,11 @@ def unprocessable(error):
     }), 422
 
 
-
 '''
 Error handler for 404
 '''
+
+
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -256,6 +265,8 @@ def not_found(error):
 '''
 Error handler for AuthError
 '''
+
+
 @app.errorhandler(AuthError)
 def authentication_error(error):
     return jsonify({
@@ -265,10 +276,11 @@ def authentication_error(error):
     }), error.status_code
 
 
-
 '''
 Error handler for Unauthorized User
 '''
+
+
 @app.errorhandler(401)
 def unauthorized(error):
     return jsonify({
@@ -278,10 +290,11 @@ def unauthorized(error):
     }), 401
 
 
-
 '''
 Error handler for Bad Request
 '''
+
+
 @app.errorhandler(400)
 def bad_request(error):
     return jsonify({
@@ -294,6 +307,8 @@ def bad_request(error):
 '''
 Error handler for Method not allowed
 '''
+
+
 @app.errorhandler(405)
 def method_not_allowed(error):
     return jsonify({

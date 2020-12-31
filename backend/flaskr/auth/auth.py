@@ -11,7 +11,8 @@ AUTH0_DOMAIN = 'project-bookmark.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'https://deltaprop.herokuapp.com/'
 
-# The below way was not working so for now I've directly assigned the variable values
+# The below way was not working
+# so for now I've directly assigned the variable values
 # AUTH0_DOMAIN = os.environ.get('AUTH0_DOMAIN')
 # ALGORITHMS = os.environ.get['ALGORITHMS']
 # API_AUDIENCE = os.environ.get('API_AUDIENCE')
@@ -63,7 +64,7 @@ def get_token_auth_header():
         }, 401)
 
     token = parts[1]
-    print('token',token)
+    print('token', token)
     return token
 
 
@@ -71,8 +72,10 @@ def check_permissions(permission, payload):
     """ Check weather a permission in present in the payload
 
     Args:
-        permission (string): a string of the format method:collection e.g. post:drinks
-        payload (python dict): a python dict representing payload extracted from Auth0 JWT
+        permission (string): a string of the format
+        method:collection e.g. post:drinks
+        payload (python dict): a python dict representing
+        payload extracted from Auth0 JWT
 
     Returns:
         boolean: if permission is present in the payload
@@ -142,9 +145,9 @@ def verify_decode_jwt(token):
                 'description': 'Unable to parse authentication token.'
             }, 400)
     raise AuthError({
-                'code': 'invalid_header',
+        'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
-            }, 400)
+    }, 400)
 
 
 def requires_auth(permission=''):
@@ -154,7 +157,7 @@ def requires_auth(permission=''):
             token = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(token)
-            except:
+            except BaseException:
                 abort(401)
 
             check_permissions(permission, payload)
@@ -164,16 +167,15 @@ def requires_auth(permission=''):
     return requires_auth_decorator
 
 
-
 def get_user_id():
-  def get_user_id_decorator(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-      token = get_token_auth_header()
-      try:
-        user_id = jwt.get_unverified_claims(token)["sub"]
-      except:
-        abort(401)
-      return f(user_id)
-    return wrapper
-  return get_user_id_decorator
+    def get_user_id_decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            token = get_token_auth_header()
+            try:
+                user_id = jwt.get_unverified_claims(token)["sub"]
+            except BaseException:
+                abort(401)
+            return f(user_id)
+        return wrapper
+    return get_user_id_decorator
