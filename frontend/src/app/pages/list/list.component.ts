@@ -164,16 +164,16 @@ export class ListComponent implements OnInit, AfterViewInit {
 
   collectionClicked(collection) {
     this.currentCollection = collection
-    this._router.navigate([], {
-      relativeTo: this._route,
-      queryParams: {
-        collection_id: collection.id
-      },
-      queryParamsHandling: 'merge',
-      // preserve the existing query params in the route
-      // skipLocationChange: true
-      // do not trigger navigation
-    });
+    // this._router.navigate([], {
+    //   relativeTo: this._route,
+    //   queryParams: {
+    //     collection_id: collection.id
+    //   },
+    //   queryParamsHandling: 'merge',
+    //   // preserve the existing query params in the route
+    //   // skipLocationChange: true
+    //   // do not trigger navigation
+    // });
 
     this.getLinksByCollectionID(`collection_id=${collection.id}`);
   }

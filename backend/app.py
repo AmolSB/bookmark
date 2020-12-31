@@ -30,7 +30,7 @@ setup_db(app)
 @app.route('/')
 def home():
     # data = request.json()
-    return {"a": None}
+    return {"Health": "Running"}
 
 
 @app.route('/collections')
@@ -78,6 +78,7 @@ def delete_link():
 
     return jsonify({
         'code': 200,
+        'id': link_id,
         'message': f'{link_id} deleted successfully'
     })
 
@@ -110,6 +111,11 @@ def save_link():
     payload = request.get_json()
     link_name = extract_name_from_url(payload["url"])
     id = uuid.uuid4().hex
+    collection = Collection.query.filter(Collection.id == collection_id).one_or_none()
+
+    if not collection:
+        abort(404)
+
     new_link = Link(
         id=id, url=payload["url"], description=payload["description"], name=link_name, collection=collection_id)
     new_link.insert()

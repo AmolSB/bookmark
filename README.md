@@ -2,6 +2,10 @@
 
 Try it at: https://amolsb.github.io/deltaprop/
 
+## Introduction and Motivation
+  - DeltaProp let's you organize your links in a new way. A user can either view public collections or sign up and create his / her own collections of links.
+  - Upon opening the application, plase click on What is it to know more.
+
 
 
 ## BACKEND
@@ -34,9 +38,14 @@ This will install all of the required packages.
 
 ## Running the server
 
-Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` file to find the application. 
+Setting the `FLASK_APP` variable to `app.py` directs flask to use the `app.py` file to find the application.
+```
+$ export FLASK_APP=app.py
+$ export FLASK_DEBUG=true
+$ flask run
+```
 
-Using the `--reload` flag will detect file changes and restart the server automatically.
+Or using the `--reload` flag will detect file changes and restart the server automatically.
 
 ## API Reference
 
@@ -361,7 +370,3 @@ Frontend uses angular 10 to serve the application
 
 ### Authentication
   - Auth0 is used for authentication.
-
-### How to use
-  - DeltaProp let's you organize your links in a new way. A user can either view public collections or sign up and create his / her own collections of links.
-  - Upon opening the application, plase click on What is it to know more.

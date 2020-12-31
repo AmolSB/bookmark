@@ -93,18 +93,18 @@
             </div>
             
 
-            <div (click)="editLink(link); drawer.toggle()" class="link__delete">
+            <div *ngIf="!showPublicCollections || authService.can('update:public-collections')" (click)="editLink(link); drawer.toggle()" class="link__delete">
               <mat-icon>edit</mat-icon>
             </div>
 
-            <div (click)="deleteLink(link)" class="link__delete">
+            <div *ngIf="!showPublicCollections || authService.can('delete:public-collections')" (click)="deleteLink(link)" class="link__delete">
               <mat-icon>delete</mat-icon>
             </div>
             <div class="link__menu"></div>
           </div>
         </div>
 
-        <div *ngIf="!showPublicCollections || authService.can('create:public-collections')">
+        <div *ngIf="collections.length && (!showPublicCollections || authService.can('create:public-collections'))">
           <div class="links__add">
             <mat-card (click)="drawer.toggle()">
               <mat-icon>add</mat-icon>
